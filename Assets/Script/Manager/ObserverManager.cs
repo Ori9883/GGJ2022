@@ -11,6 +11,11 @@ public class ObserverManager : StaticInstance<ObserverManager>
         observersList.Add(ob);
     }
 
+    public void RemoveObserver(Observer ob)
+    {
+        observersList.Remove(ob);
+    }
+
     public void Noitfy()
     {
         foreach(var child in observersList)

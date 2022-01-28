@@ -9,16 +9,34 @@ public class MaskedObj : MonoBehaviour,Observer
     SpriteRenderer myRenderer;
     public Rigidbody2D myRg;
     public Collider2D myColl;
-//    public Collider2D myTrigger;
+    //    public Collider2D myTrigger;
 
-    // Start is called before the first frame update
-    protected virtual void Start()
+    private void Awake()
     {
-        RegisterOB();
         myRg = GetComponent<Rigidbody2D>();
         myRenderer = GetComponent<SpriteRenderer>();
+    }
+
+    public void Start()
+    {
+        OnStart();
+    }
+
+    public void Update()
+    {
+        OnUpdate();
+    }
+
+    public virtual void OnStart()
+    {
+        RegisterOB();
         Init();
         InitColorCube();
+    }
+
+    public virtual void OnUpdate()
+    {
+
     }
 
     public void Init()

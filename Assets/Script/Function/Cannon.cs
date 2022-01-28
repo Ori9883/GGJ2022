@@ -46,7 +46,7 @@ public class Cannon : MonoBehaviour
         bulletObj.myColor = colorType;
         bulletObj.InitColorCube();
         //Éä»÷
-        Vector2 forceDir = new Vector2(shootPointer.position.x - transform.position.x, shootPointer.position.y - transform.position.y);
+        Vector2 forceDir = new Vector2(shootPointer.position.x - transform.position.x, shootPointer.position.y - transform.position.y).normalized;
         bulletObj.myRg.AddForce(forceDir * force, ForceMode2D.Impulse);
         //×ª»»ÑÕÉ«
         ChangeColor();
