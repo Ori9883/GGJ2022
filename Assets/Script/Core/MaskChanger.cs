@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class MaskChanger : StaticInstance<MaskChanger>
 {
+    [Header("Player Animation")]
+    public GameObject maskFX;
+
     [Header("Mask parameter")]
     private SpriteMask mask;
     public MaskType maskType;
@@ -40,6 +43,7 @@ public class MaskChanger : StaticInstance<MaskChanger>
             {
                 isRunCoroutine = true;
                 mask.enabled = true;
+                maskFX.SetActive(true);
                 StartCoroutine(ExpandMask(maxScale, expandTime));
             }
         }

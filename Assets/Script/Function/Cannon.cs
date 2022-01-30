@@ -8,7 +8,6 @@ public class Cannon : MonoBehaviour
     public Transform shootPointer;
     public float timeGap;
     public float force;
-    public float ballDestoryTime;
 
     [Header("Color Setting")]
     public MaskType startColor;

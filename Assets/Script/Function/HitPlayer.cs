@@ -12,4 +12,12 @@ public class HitPlayer : MonoBehaviour
             collision.gameObject.GetComponent<IDamageable>().TakeDamage(damageNum);
         }
     }
+
+    public void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            collision.gameObject.GetComponent<IDamageable>().TakeDamage(damageNum);
+        }
+    }
 }

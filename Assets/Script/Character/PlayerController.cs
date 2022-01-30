@@ -5,10 +5,11 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour, IDamageable
 {
     private Rigidbody2D rb;
+    public Animator anim;
     public int health;
     public float speed;
     public float jumpForce;
-
+    public bool isDead;
 
     [Header("States Check")]
     public bool isGround;
@@ -29,13 +30,22 @@ public class PlayerController : MonoBehaviour, IDamageable
     void Update()
     {
         CheckInput();
+
+        if(health <= 0)
+        {
+            isDead = true;
+        }
+        anim.SetBool("dead", isDead);
     }
 
     private void FixedUpdate()
     {
-        PhysicsCheck();
-        Movement();
-        Jump();
+        if (!isDead)
+        {
+            PhysicsCheck();
+            Movement();
+            Jump();
+        }
     }
 
     void Movement()
@@ -55,7 +65,7 @@ public class PlayerController : MonoBehaviour, IDamageable
         {
             isJump = true;
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
-            rb.gravityScale = 4;
+            rb.gravityScale = 3;
             canJump = false;
         }
     }
@@ -73,18 +83,27 @@ public class PlayerController : MonoBehaviour, IDamageable
         isGround = Physics2D.OverlapCircle(groundCheck.position, checkRadius, groundLayer);
         if (isGround)
         {
-            rb.gravityScale = 1;
+            if(anim.GetCurrentAnimatorStateInfo(0).IsName("Idle") || anim.GetCurrentAnimatorStateInfo(0).IsName("Walk"))
+            {
+                rb.gravityScale = 1;
+            }
             isJump = false;
         }
     }
 
     public void TakeDamage(int damage)
     {
-        health -= damage;
-        if(health <= 0)
+        Debug.Log("进入伤害范围");
+        if (!anim.GetCurrentAnimatorStateInfo(0).IsName("hit"))
         {
-            health = 0;
-            //玩家死亡触发其他逻辑
+            Debug.Log("造成伤害");
+            health -= damage;
+            anim.SetTrigger("hit");
+            if (health <= 0)
+            {
+                health = 0;
+                //玩家死亡触发其他逻辑
+            }
         }
     }
 }
